@@ -46,3 +46,8 @@ document.getElementById("case_plus").addEventListener("click", function(){
 document.getElementById("case_minus").addEventListener("click", function(){
     itemsUpdate("case", 59, false);
 });
+// checkOut are here
+document.getElementById("checkOut").addEventListener("click", function(){
+    alert("Your Request are being process");
+    alert("Thank's for shopping with us 😊");
+})

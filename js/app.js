@@ -9,16 +9,12 @@ function priceUpdateOneItems(plusMinusBtn,fixPrice, totalSinglePrice, qty, isqun
         const getFixPrice = parseFloat(getFixPriceText.innerText);
         const getInputAmount = parseInt(getInputValue.value);
         if(isqunt){
-            // getInputValue.value =parseInt(getInputValue.value)+1;
-            // updatePrice.innerText = getFixPrice*parseInt(getInputValue.value);
-            getInputValue.value =getInputAmount+1;
-            updatePrice.innerText = getFixPrice*getInputAmount;
+            getInputValue.value =parseInt(getInputValue.value)+1;
+            updatePrice.innerText = getFixPrice*parseInt(getInputValue.value);
         }else{
             if(getInputValue.value >0){
-                // getInputValue.value = parseInt(getInputValue.value)-1;
-                // updatePrice.innerText = getFixPrice*parseInt(getInputValue.value);
-                getInputValue.value = getInputAmount-1;
-                updatePrice.innerText = getFixPrice*getInputAmount;
+                getInputValue.value = parseInt(getInputValue.value)-1;
+                updatePrice.innerText = getFixPrice*parseInt(getInputValue.value);
             }
         }allPrices();
     });
@@ -41,10 +37,14 @@ function allPrices(){
 }
 function checkOut(){
     const tk = allPrices();
-    alert(`Great Your order in progress.. your total price is :- ${tk} only`)
+    if(tk>0){
+        alert(`Great Your order in progress..😊 your total price is :- ${tk} only`)
+    }else{
+        alert("Please select some product and place order 😊")
+    }
 }
 
 priceUpdateOneItems("phone-plus", "phone-fixed-price", "phone-update-price", "phone-qty", true);
-priceUpdateOneItems("phone-minus", "phone-fixed-price", "phone-update-price", "phone-qty", true);
+priceUpdateOneItems("phone-minus", "phone-fixed-price", "phone-update-price", "phone-qty", false);
 priceUpdateOneItems("case-plus", "case-fixed-price", "update-case-price", "case-qty", true);
 priceUpdateOneItems("case-minus", "case-fixed-price", "update-case-price", "case-qty", false);

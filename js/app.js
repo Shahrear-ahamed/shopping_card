@@ -1,53 +1,50 @@
-window.onload = function fixTax(){
-    totalAmountFanc();
+window.onload=function(){
+    allPrices();
 }
-function itemsUpdate(product,price, isAdd){
-    const productInput = document.getElementById(product + "_number");
-    let productAmount = parseInt(productInput.value);
-    if(isAdd){
-        productAmount = productAmount + 1;
-    }else if(productAmount > 0){
-        productAmount = productAmount - 1;
-    }
-    productInput.value = productAmount;
-    const priceText = document.getElementById(product + "_price");
-    priceText.innerText = productAmount * price;
-    // total 
-    totalAmountFanc();
+function priceUpdateOneItems(plusMinusBtn,fixPrice, totalSinglePrice, qty, isqunt){
+    document.getElementById(plusMinusBtn).addEventListener("click", function(){
+        const getFixPriceText = document.getElementById(fixPrice);
+        const updatePrice = document.getElementById(totalSinglePrice)
+        const getInputValue = document.getElementById(qty);
+        const getFixPrice = parseFloat(getFixPriceText.innerText);
+        const getInputAmount = parseInt(getInputValue.value);
+        if(isqunt){
+            // getInputValue.value =parseInt(getInputValue.value)+1;
+            // updatePrice.innerText = getFixPrice*parseInt(getInputValue.value);
+            getInputValue.value =getInputAmount+1;
+            updatePrice.innerText = getFixPrice*getInputAmount;
+        }else{
+            if(getInputValue.value >0){
+                // getInputValue.value = parseInt(getInputValue.value)-1;
+                // updatePrice.innerText = getFixPrice*parseInt(getInputValue.value);
+                getInputValue.value = getInputAmount-1;
+                updatePrice.innerText = getFixPrice*getInputAmount;
+            }
+        }allPrices();
+    });
 }
-// total price are added here 
-function getInputValue(names){
-    const productText = document.getElementById(names + "_price");
-    return productAmount = parseInt(productText.innerText);
-}
-function totalAmountFanc(){
-    const phonePrice = getInputValue("phone");
-    const casePrice = getInputValue("case");
+function allPrices(){
+    //prices form top
+    const mobilePrice = document.getElementById("phone-update-price").innerText;
+    const casePrice = document.getElementById("update-case-price").innerText;
+    // set prices
+    const subTotalText = document.getElementById("sub-total");
+    const taxText = document.getElementById("tax-amount");
+    const grandTotalText = document.getElementById("full-total");
 
-    const sum = phonePrice+casePrice;
-    const tax = parseFloat((sum/15).toFixed(2));
-    const grandTotal = sum + tax;
+    const sum = parseFloat(mobilePrice)+parseFloat(casePrice);
+    const tax =parseFloat((sum*.10).toFixed(1));
 
-    document.getElementById("sub_total").innerText = sum;
-    document.getElementById("tax_amount").innerText = tax;
-    document.getElementById("full_total").innerText = grandTotal;
+    subTotalText.innerText = sum;
+    taxText.innerText= tax;
+    return grandTotalText.innerText= sum+tax;
 }
-// phone handeler
-document.getElementById("phone_plus").addEventListener("click",function(){
-    itemsUpdate("phone", 1219, true);
-});
-document.getElementById("phone_minus").addEventListener("click", function(){
-    itemsUpdate("phone", 1219, false);
-});
-// case handler
-document.getElementById("case_plus").addEventListener("click", function(){
-    itemsUpdate("case", 59, true);
-});
-document.getElementById("case_minus").addEventListener("click", function(){
-    itemsUpdate("case", 59, false);
-});
-// checkOut are here
-document.getElementById("checkOut").addEventListener("click", function(){
-    alert("Your Request are being process");
-    alert("Thank's for shopping with us 😊");
-})
+function checkOut(){
+    const tk = allPrices();
+    alert(`Great Your order in progress.. your total price is :- ${tk} only`)
+}
+
+priceUpdateOneItems("phone-plus", "phone-fixed-price", "phone-update-price", "phone-qty", true);
+priceUpdateOneItems("phone-minus", "phone-fixed-price", "phone-update-price", "phone-qty", true);
+priceUpdateOneItems("case-plus", "case-fixed-price", "update-case-price", "case-qty", true);
+priceUpdateOneItems("case-minus", "case-fixed-price", "update-case-price", "case-qty", false);
